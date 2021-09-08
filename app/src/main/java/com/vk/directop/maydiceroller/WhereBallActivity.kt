@@ -27,7 +27,8 @@ class WherBallActivity : AppCompatActivity() {
     val size = 7
     var x = 3
     var y = 3
-    var moves = 4
+    var moves = 0
+    val startMoves = 7
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,15 +45,27 @@ class WherBallActivity : AppCompatActivity() {
 
 
         btShowResult!!.setOnClickListener {
-            //if (etX!!.text == x)
-            tv2!!.text = "\n${x} ${y}" }
+
+            val userX: Int? = etX!!.text?.toString()?.toIntOrNull()
+            val userY: Int? = etY!!.text?.toString()?.toIntOrNull()
+            if (userX == null || userY == null) {
+                return@setOnClickListener
+            }
+            var result = ""
+            if (userX == x && userY == y && moves == 0){
+                result = "You win!"
+            }else{
+                result = "You lose."
+            }
+            tv2!!.text = "${result}\nRight answer is ${x} ${y}" }
 
 
         btNewGame!!.setOnClickListener {
             textToShow = ""
             x = 3
             y = 3
-            for (i in 1..6){
+            moves = startMoves
+            for (i in 1..moves){
                 textToShow = textToShow + makeMove()
             }
             tv1!!.text = textToShow //+ "\n${x} ${y}"
