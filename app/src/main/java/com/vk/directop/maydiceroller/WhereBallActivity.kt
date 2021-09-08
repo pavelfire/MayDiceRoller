@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.*
@@ -16,6 +17,8 @@ class WherBallActivity : AppCompatActivity() {
     private var tv2: TextView? = null
     private var btShowResult: Button? = null
     private var btNewGame: Button? = null
+    private var etX: EditText? = null
+    private var etY: EditText? = null
 
     //implements SoundPool.OnLoadCompleteListener {
     //https://devcolibri.com/getting-started-with-retrofit-in-android/
@@ -34,11 +37,17 @@ class WherBallActivity : AppCompatActivity() {
         tv2 = findViewById(R.id.tv2)
         btShowResult = findViewById(R.id.btShowResult)
         btNewGame = findViewById(R.id.btNewGame)
+        etX = findViewById(R.id.etX)
+        etY = findViewById(R.id.etY)
 
         var textToShow = "" //"!!!!!!!!!\n${x} ${y}\n"
 
 
-        btShowResult!!.setOnClickListener { tv2!!.text = "\n${x} ${y}" }
+        btShowResult!!.setOnClickListener {
+            //if (etX!!.text == x)
+            tv2!!.text = "\n${x} ${y}" }
+
+
         btNewGame!!.setOnClickListener {
             textToShow = ""
             x = 3
