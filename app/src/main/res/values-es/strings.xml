@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Where is the ball</string>
+    <string name="roll">Roll</string>
+    <string name="up">arriba</string>
+    <string name="down">abajo</string>
+    <string name="left">izquierda</string>
+    <string name="right">derecho</string>
+</resources>

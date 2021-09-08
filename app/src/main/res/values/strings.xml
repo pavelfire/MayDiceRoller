@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">May Dice Roller</string>
+    <string name="app_name">Where is the ball</string>
     <string name="roll">Roll</string>
+    <string name="up">up</string>
+    <string name="down">down</string>
+    <string name="left">left</string>
+    <string name="right">right</string>
 </resources>

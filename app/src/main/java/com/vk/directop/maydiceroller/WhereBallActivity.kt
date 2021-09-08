@@ -67,7 +67,10 @@ class WherBallActivity : AppCompatActivity() {
             moves = startMoves
             for (i in 1..moves){
                 textToShow = textToShow + makeMove()
+                speak(makeMove())
+                //Thread.sleep(2000)
             }
+            speak(textToShow)
             tv1!!.text = textToShow //+ "\n${x} ${y}"
             tv2!!.text = ""
         }
@@ -143,35 +146,34 @@ class WherBallActivity : AppCompatActivity() {
     private fun makeMove(): String{
         val move = Move(3)
         val dir = move.roll()
-
         when (dir){
             0 -> {//move up
-                if (y > 0) {
+                if (y > 0) {// up
                     y--
                     moves--
-                    speak("up")
-                    return "-up-"
+                    //speak("up")
+                    return " " + getString(R.string.up)
                 }
             }
             1 -> {
-                if (y < size - 1) {
+                if (y < size - 1) {// down
                     y++
                     moves--
-                    return "-down-"
+                    return " " + getString(R.string.down)
                 }
             }
             2 -> {
-                if (x > 0) {
+                if (x > 0) {// left
                     x--
                     moves--
-                    return "-left-"
+                    return " " + getString(R.string.left)
                 }
             }
             3 -> {
-                if (x < size - 1) {
+                if (x < size - 1) {// right
                     x++
                     moves--
-                    return "-right-"
+                    return " " + getString(R.string.right)
                 }
             }
         }
