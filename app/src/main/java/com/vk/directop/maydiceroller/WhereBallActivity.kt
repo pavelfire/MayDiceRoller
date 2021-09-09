@@ -67,7 +67,7 @@ class WherBallActivity : AppCompatActivity() {
             moves = startMoves
             for (i in 1..moves){
                 textToShow = textToShow + makeMove()
-                speak(makeMove())
+                //speak(makeMove())
                 //Thread.sleep(2000)
             }
             speak(textToShow)
