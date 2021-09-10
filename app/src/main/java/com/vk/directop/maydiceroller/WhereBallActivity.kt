@@ -9,6 +9,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 class WherBallActivity : AppCompatActivity() {
@@ -52,12 +55,13 @@ class WherBallActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             var result = ""
-            if (userX == x && userY == y && moves == 0){
+            if (userX == x && userY == y && moves == 0) {
                 result = "You win!"
-            }else{
+            } else {
                 result = "You lose."
             }
-            tv2!!.text = "${result}\nRight answer is ${x} ${y}" }
+            tv2!!.text = "${result}\nRight answer is ${x} ${y}"
+        }
 
 
         btNewGame!!.setOnClickListener {
@@ -65,18 +69,30 @@ class WherBallActivity : AppCompatActivity() {
             x = 3
             y = 3
             moves = startMoves
-            for (i in 1..moves){
-                textToShow = textToShow + makeMove()
-                //speak(makeMove())
+
+
+            GlobalScope.launch {
+                for (i in 1..moves) {
+                    val text = makeMove()
+
+                    speak(text)
+
+                    delay(1500)
+                    textToShow = textToShow + text
+                }
+
+
                 //Thread.sleep(2000)
             }
-            speak(textToShow)
+            //speak(textToShow)
             tv1!!.text = textToShow //+ "\n${x} ${y}"
             tv2!!.text = ""
         }
-
         mTTS = speechInit()
+    }
 
+    private fun corSpeak(text: String) {
+        speak(text)
 
     }
 
@@ -107,6 +123,7 @@ class WherBallActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun speak(text: String) {
         var pitch = 1f
         if (pitch < 0.1) pitch = 0.1f
@@ -123,6 +140,7 @@ class WherBallActivity : AppCompatActivity() {
             Log.e("TTS", "PV Under20")
         }
     }
+
     private fun ttsUnder20(text: String) {
         val map = HashMap<String, String>()
         map[TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID] = "MessageId"
@@ -134,6 +152,7 @@ class WherBallActivity : AppCompatActivity() {
         val utteranceId = this.hashCode().toString() + ""
         mTTS!!.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId)
     }
+
     override fun onDestroy() {
         if (mTTS != null) {
             mTTS!!.stop()
@@ -143,10 +162,10 @@ class WherBallActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun makeMove(): String{
+    private fun makeMove(): String {
         val move = Move(3)
         val dir = move.roll()
-        when (dir){
+        when (dir) {
             0 -> {//move up
                 if (y > 0) {// up
                     y--
@@ -180,8 +199,8 @@ class WherBallActivity : AppCompatActivity() {
         return "\n"
     }
 
-    class Move(val numOfDir: Int){
-        fun roll(): Int{
+    class Move(val numOfDir: Int) {
+        fun roll(): Int {
             return (0..numOfDir).random()
         }
     }
